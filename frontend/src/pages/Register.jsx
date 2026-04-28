@@ -1,20 +1,35 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { register, reset } from '../store/authSlice';
-import { Truck, Mail, Lock, User, ArrowRight, ShieldCheck, UserCircle, Briefcase, CheckCircle2 } from 'lucide-react';
+import { register, reset } from '../features/auth/authSlice';
+import { Truck, CheckCircle2, UserCircle, Briefcase, Star, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 const Register = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', role: 'user' });
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        role: 'user',
+    });
+
     const { name, email, password, role } = formData;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { user, loading, error } = useSelector(state => state.auth);
+    const { user, isLoading, isError, isSuccess, message } = useSelector(state => state.auth);
 
     useEffect(() => {
-        if (user) navigate('/');
-    }, [user, navigate]);
+        if (isError) {
+            toast.error(message);
+        }
+        if (isSuccess || user) {
+            if (user?.role === 'admin') navigate('/admin');
+            else if (user?.role === 'agent') navigate('/agent/dashboard');
+            else navigate('/dashboard');
+        }
+        dispatch(reset());
+    }, [user, isError, isSuccess, message, navigate, dispatch]);
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
     const selectRole = (newRole) => setFormData({ ...formData, role: newRole });
@@ -24,126 +39,151 @@ const Register = () => {
     };
 
     return (
-        <div style={{ minHeight: '100vh', display: 'flex', background: '#F8FAFC' }} className="fade-in">
-            {/* Split Screen Layout */}
-            <div style={{ flex: '1.2', display: 'flex', flexDirection: 'column', background: '#FFFFFF', borderRight: '1px solid #F1F5F9', padding: '4rem', position: 'relative', overflow: 'hidden' }}>
-                <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: 'auto', position: 'relative', zIndex: 10 }}>
-                    <div style={{ background: 'var(--primary)', padding: '0.6rem', borderRadius: '12px', boxShadow: '0 10px 20px var(--primary-glow)' }}>
-                        <Truck color="white" size={24} />
+        <div style={{ minHeight: '100vh', display: 'flex', background: 'white', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            {/* Left Side: Brand Panel */}
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                style={{ 
+                    flex: '1.1', background: '#455af7', padding: '3rem 4rem', 
+                    display: 'flex', flexDirection: 'column', color: 'white', 
+                    position: 'relative', overflow: 'hidden' 
+                }}
+            >
+                <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '1.5rem', fontWeight: 900, marginBottom: '4rem', zIndex: 10 }}>
+                    <div style={{ background: 'white', padding: '0.4rem', borderRadius: '10px', display: 'flex' }}>
+                        <Truck color="#455af7" size={20} />
                     </div>
-                    <span style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--text-main)' }}>RuralReach</span>
+                    RuralReach
                 </Link>
 
-                <div style={{ maxWidth: '580px', position: 'relative', zIndex: 10, marginBottom: 'auto' }}>
+                <div style={{ position: 'relative', zIndex: 10, marginTop: '2rem' }}>
                     <motion.h1 
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        style={{ fontSize: '4.5rem', fontWeight: 900, color: 'var(--text-main)', lineHeight: 1.05, marginBottom: '2rem', letterSpacing: '-0.04em' }}
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                        style={{ fontSize: '3.5rem', fontWeight: 900, lineHeight: 1.1, marginBottom: '2.5rem', letterSpacing: '-0.02em' }}
                     >
-                        Empowering the <br/><span style={{ color: 'var(--primary)' }}>Connected World.</span>
+                        Join the future of <br/> rural logistics.
                     </motion.h1>
-                    <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '4rem', fontWeight: 500 }}>
-                        Join the network building the world's most resilient logistics infrastructure. From global production to the hidden mile.
-                    </p>
 
-                    <div style={{ display: 'grid', gap: '1.5rem' }}>
+                    <motion.div 
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        style={{ display: 'grid', gap: '1.25rem' }}
+                    >
                         {[
-                            'Earn as a certified delivery agent',
-                            'Modernize regional commerce',
-                            'Offline-first handoff verification'
+                            'Real-time tracking for every shipment',
+                            'Optimized routes across any terrain',
+                            'Secure community verification'
                         ].map((text, i) => (
                             <div key={i} style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                                <div style={{ background: 'var(--primary-light)', padding: '0.4rem', borderRadius: '50%', display: 'flex' }}>
-                                    <CheckCircle2 color="var(--primary)" size={18} />
-                                </div>
-                                <span style={{ fontWeight: 600, color: 'var(--text-secondary)' }}>{text}</span>
+                                <CheckCircle2 size={18} style={{ opacity: 0.8 }} />
+                                <span style={{ fontWeight: 600, fontSize: '1.1rem', opacity: 0.9 }}>{text}</span>
                             </div>
                         ))}
+                    </motion.div>
+                </div>
+
+                {/* Glass Testimonial */}
+                <div style={{ marginTop: 'auto', position: 'relative', zIndex: 10 }}>
+                    <div style={{ 
+                        background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)',
+                        padding: '2rem', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.1)',
+                        maxWidth: '500px'
+                    }}>
+                        <div style={{ display: 'flex', gap: '0.2rem', marginBottom: '1rem' }}>
+                            {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="white" color="white" />)}
+                        </div>
+                        <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: 500, fontStyle: 'italic', opacity: 0.9 }}>
+                            "RuralReach is a game-changer for regional distribution."
+                        </p>
                     </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.05em' }}>
-                    <ShieldCheck size={18} />
-                    <span>SECURE REGISTRATION PROTOCOL // v2.4</span>
-                </div>
-                <div style={{ position: 'absolute', bottom: '-10%', left: '-5%', width: '120%', height: '40%', background: 'radial-gradient(ellipse at center, var(--primary-light) 0%, transparent 70%)', opacity: 0.5 }}></div>
-            </div>
+                <div style={{ position: 'absolute', bottom: '-10%', right: '-10%', width: '600px', height: '600px', background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }}></div>
+            </motion.div>
 
-            {/* Register Form Area */}
-            <div style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}>
+            {/* Right Side */}
+            <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem' }}
+            >
                 <div style={{ width: '100%', maxWidth: '440px' }}>
-                    <div style={{ marginBottom: '2.5rem' }}>
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem' }}>Create Account</h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', fontWeight: 500 }}>Select your role to get started.</p>
+                    <div style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
+                        <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem', color: '#0f172a' }}>Create Account</h2>
+                        <p style={{ color: '#64748b', fontSize: '1.1rem', fontWeight: 500 }}>Choose your role to get started.</p>
                     </div>
 
-                    {/* Enhanced Role Selector */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2.5rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
                         <div 
                             onClick={() => selectRole('user')}
                             style={{ 
-                                padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: `2px solid ${role === 'user' ? 'var(--primary)' : 'var(--border)'}`, 
-                                background: role === 'user' ? 'var(--primary-light)' : 'var(--bg-white)', cursor: 'pointer', textAlign: 'center',
-                                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: role === 'user' ? '0 10px 30px var(--primary-glow)' : 'none'
+                                padding: '1.25rem', borderRadius: '12px', border: `2px solid ${role === 'user' ? '#455af7' : '#f1f5f9'}`, 
+                                background: role === 'user' ? 'white' : '#f8fafc', cursor: 'pointer', textAlign: 'center',
+                                transition: 'all 0.2s', boxShadow: role === 'user' ? '0 10px 20px -5px rgba(69, 90, 247, 0.1)' : 'none'
                             }}
                         >
-                            <UserCircle size={28} color={role === 'user' ? 'var(--primary)' : 'var(--text-muted)'} style={{ marginBottom: '0.5rem' }} />
-                            <p style={{ fontSize: '0.9rem', fontWeight: 800, color: role === 'user' ? 'var(--primary)' : 'var(--text-secondary)', margin: 0 }}>Customer</p>
+                            <UserCircle size={24} color={role === 'user' ? '#455af7' : '#94a3b8'} style={{ marginBottom: '0.5rem' }} />
+                            <p style={{ fontSize: '0.85rem', fontWeight: 800, color: role === 'user' ? '#455af7' : '#64748b', margin: 0 }}>Customer</p>
                         </div>
                         <div 
                             onClick={() => selectRole('agent')}
                             style={{ 
-                                padding: '1.5rem', borderRadius: 'var(--radius-lg)', border: `2px solid ${role === 'agent' ? 'var(--primary)' : 'var(--border)'}`, 
-                                background: role === 'agent' ? 'var(--primary-light)' : 'var(--bg-white)', cursor: 'pointer', textAlign: 'center',
-                                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: role === 'agent' ? '0 10px 30px var(--primary-glow)' : 'none'
+                                padding: '1.25rem', borderRadius: '12px', border: `2px solid ${role === 'agent' ? '#455af7' : '#f1f5f9'}`, 
+                                background: role === 'agent' ? 'white' : '#f8fafc', cursor: 'pointer', textAlign: 'center',
+                                transition: 'all 0.2s', boxShadow: role === 'agent' ? '0 10px 20px -5px rgba(69, 90, 247, 0.1)' : 'none'
                             }}
                         >
-                            <Briefcase size={28} color={role === 'agent' ? 'var(--primary)' : 'var(--text-muted)'} style={{ marginBottom: '0.5rem' }} />
-                            <p style={{ fontSize: '0.9rem', fontWeight: 800, color: role === 'agent' ? 'var(--primary)' : 'var(--text-secondary)', margin: 0 }}>Agent</p>
+                            <Briefcase size={24} color={role === 'agent' ? '#455af7' : '#94a3b8'} style={{ marginBottom: '0.5rem' }} />
+                            <p style={{ fontSize: '0.85rem', fontWeight: 800, color: role === 'agent' ? '#455af7' : '#64748b', margin: 0 }}>Agent</p>
                         </div>
                     </div>
 
-                    <form onSubmit={onSubmit} style={{ display: 'grid', gap: '1.5rem' }}>
-                        <div className="form-group">
-                            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name</label>
-                            <div style={{ position: 'relative' }}>
-                                <User style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={18} />
-                                <input name="name" value={name} onChange={onChange} className="form-control" placeholder="John Doe" style={{ paddingLeft: '3.5rem' }} required />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Work Email</label>
-                            <div style={{ position: 'relative' }}>
-                                <Mail style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={18} />
-                                <input name="email" value={email} onChange={onChange} className="form-control" placeholder="email@company.com" style={{ paddingLeft: '3.5rem' }} required />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-secondary)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Security Key</label>
-                            <div style={{ position: 'relative' }}>
-                                <Lock style={{ position: 'absolute', left: '1.25rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} size={18} />
-                                <input type="password" name="password" value={password} onChange={onChange} className="form-control" placeholder="••••••••" style={{ paddingLeft: '3.5rem' }} required />
-                            </div>
-                        </div>
+                    <form onSubmit={onSubmit} style={{ display: 'grid', gap: '1.25rem' }}>
+                        <input 
+                            type="text" name="name" value={name} onChange={onChange} 
+                            style={{ padding: '1.1rem 1.25rem', borderRadius: '12px', border: '2px solid #f1f5f9', background: '#f8fafc', fontSize: '1rem', fontWeight: 500, width: '100%', outline: 'none' }} 
+                            placeholder="Full Name" required 
+                        />
+                        <input 
+                            type="email" name="email" value={email} onChange={onChange} 
+                            style={{ padding: '1.1rem 1.25rem', borderRadius: '12px', border: '2px solid #f1f5f9', background: '#f8fafc', fontSize: '1rem', fontWeight: 500, width: '100%', outline: 'none' }} 
+                            placeholder="Email" required 
+                        />
+                        <input 
+                            type="password" name="password" value={password} onChange={onChange} 
+                            style={{ padding: '1.1rem 1.25rem', borderRadius: '12px', border: '2px solid #f1f5f9', background: '#f8fafc', fontSize: '1rem', fontWeight: 500, width: '100%', outline: 'none' }} 
+                            placeholder="Password" required 
+                        />
 
-                        {error && <div style={{ color: '#ef4444', fontSize: '0.9rem', fontWeight: 700, padding: '1rem', background: '#fef2f2', borderRadius: '12px' }}>{error}</div>}
-
-                        <button 
-                            type="submit" className="btn btn-primary" 
-                            style={{ width: '100%', marginTop: '1rem', padding: '1.1rem' }} 
-                            disabled={loading}
+                        <motion.button 
+                            whileHover={{ scale: 1.01 }}
+                            whileTap={{ scale: 0.99 }}
+                            className="btn btn-primary" 
+                            style={{ 
+                                padding: '1.1rem', borderRadius: '12px', fontSize: '1rem', 
+                                fontWeight: 800, marginTop: '1rem',
+                                background: '#455af7', color: 'white', border: 'none',
+                                cursor: 'pointer', boxShadow: '0 20px 40px -10px rgba(69, 90, 247, 0.3)'
+                            }} 
+                            disabled={isLoading}
                         >
-                            {loading ? 'Provisioning Account...' : `Register as ${role.toUpperCase()}`} <ArrowRight size={20} />
-                        </button>
+                            {isLoading ? 'Creating Account...' : `Register as ${role === 'user' ? 'Customer' : 'Agent'}`}
+                        </motion.button>
+                        
+                        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                            <p style={{ color: '#64748b', fontSize: '0.95rem', fontWeight: 500 }}>
+                                Joined already? <Link to="/login" style={{ color: '#455af7', textDecoration: 'none', fontWeight: 800 }}>Log In</Link>
+                            </p>
+                        </div>
                     </form>
-
-                    <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', fontWeight: 500 }}>
-                            Joined already? <Link to="/login" style={{ color: 'var(--primary)', fontWeight: 800, textDecoration: 'none' }}>Log In</Link>
-                        </p>
-                    </div>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 };

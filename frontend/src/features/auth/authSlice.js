@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
 
-const user = JSON.parse(localStorage.getItem('user'));
+const userData = JSON.parse(localStorage.getItem('user'));
 
 const initialState = {
-    user: user ? user : null,
+    user: userData ? userData.user : null,
+    token: userData ? userData.token : null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -53,7 +54,10 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (userD
             },
         });
         if (response.data) {
-            localStorage.setItem('user', JSON.stringify(response.data));
+            // Merge new user data with existing token in localStorage
+            const currentData = JSON.parse(localStorage.getItem('user'));
+            const newData = { ...currentData, user: response.data.user || response.data };
+            localStorage.setItem('user', JSON.stringify(newData));
         }
         return response.data;
     } catch (error) {
@@ -81,13 +85,15 @@ export const authSlice = createSlice({
             .addCase(register.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.user = action.payload;
+                state.user = action.payload.user;
+                state.token = action.payload.token;
             })
             .addCase(register.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
                 state.user = null;
+                state.token = null;
             })
             .addCase(login.pending, (state) => {
                 state.isLoading = true;
@@ -95,16 +101,19 @@ export const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.user = action.payload;
+                state.user = action.payload.user;
+                state.token = action.payload.token;
             })
             .addCase(login.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isError = true;
                 state.message = action.payload;
                 state.user = null;
+                state.token = null;
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
+                state.token = null;
             })
             .addCase(updateProfile.pending, (state) => {
                 state.isLoading = true;
@@ -112,7 +121,7 @@ export const authSlice = createSlice({
             .addCase(updateProfile.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isSuccess = true;
-                state.user = action.payload;
+                state.user = action.payload.user || action.payload;
             })
             .addCase(updateProfile.rejected, (state, action) => {
                 state.isLoading = false;
