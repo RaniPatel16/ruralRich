@@ -145,12 +145,7 @@ rural/
 
 ---
 
-##  Screenshots
-| Landing Page | Modern Split-View Login | Admin Control Hub |
-| :---: | :---: | :---: |
-| ![Landing](/hero.png) | ![Login](/auth_hero.png) | *Coming Soon* |
 
----
 
 ## Author
 **Rani Patel**
