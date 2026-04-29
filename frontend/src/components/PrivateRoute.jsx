@@ -8,11 +8,14 @@ const PrivateRoute = ({ roles }) => {
         return <Navigate to="/login" />;
     }
 
+ feature/ui-architecture
     // Case-insensitive role check
     const userRole = user.role?.toLowerCase();
     const allowedRoles = roles?.map(r => r.toLowerCase());
 
     if (roles && !allowedRoles.includes(userRole)) {
+    if (roles && !roles.includes(user.role)) {
+ main
         return <Navigate to="/forbidden" />;
     }
 
