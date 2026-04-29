@@ -14,10 +14,22 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+// Route files
+const authRoutes = require('./routes/authRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const addressRoutes = require('./routes/addressRoutes');
+const deliveryRoutes = require('./routes/deliveryRoutes');
+
 // Routes
 app.get('/', (req, res) => {
     res.json({ message: 'API is running...' });
 });
+
+// Mount routers
+app.use('/api/auth', authRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/addresses', addressRoutes);
+app.use('/api/deliveries', deliveryRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
