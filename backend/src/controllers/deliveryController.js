@@ -38,16 +38,27 @@ exports.updateDeliveryStatus = async (req, res) => {
             updateData.deliveryPhoto = `/uploads/${req.file.filename}`;
         }
 
+        let delivery = await Delivery.findById(req.params.id);
+        
         if (status === 'delivered') {
             updateData.completedAt = Date.now();
-            // Calculate earnings for this delivery (e.g. ₹150 + random bonus)
+            // Calculate earnings for this delivery
             updateData.earnings = 150 + Math.floor(Math.random() * 100);
-            // Update the main order status too
-            const delivery = await Delivery.findById(req.params.id);
-            await Order.findByIdAndUpdate(delivery.orderId, { status: 'delivered' });
         }
+        
+        // Always sync the main Order status with the Delivery status
+        await Order.findByIdAndUpdate(delivery.orderId, { status: status });
 
-        const delivery = await Delivery.findByIdAndUpdate(req.params.id, updateData, { new: true });
+        delivery = await Delivery.findByIdAndUpdate(req.params.id, updateData, { new: true });
+        
+        // Checklist #14: Emit Live Socket.io Event
+        const io = req.app.get('io');
+        if (io) {
+            io.to(delivery.orderId.toString()).emit('order_status_update', {
+                orderId: delivery.orderId.toString(),
+                status: status
+            });
+        }
         
         res.status(200).json({ success: true, data: delivery });
     } catch (err) {
