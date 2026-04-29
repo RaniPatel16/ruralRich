@@ -119,28 +119,39 @@ const Register = () => {
                         <p style={{ color: '#64748b', fontSize: '1.1rem', fontWeight: 500 }}>Choose your role to get started.</p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
                         <div 
                             onClick={() => selectRole('user')}
                             style={{ 
-                                padding: '1.25rem', borderRadius: '12px', border: `2px solid ${role === 'user' ? '#455af7' : '#f1f5f9'}`, 
+                                padding: '1rem 0.5rem', borderRadius: '12px', border: `2px solid ${role === 'user' ? '#455af7' : '#f1f5f9'}`, 
                                 background: role === 'user' ? 'white' : '#f8fafc', cursor: 'pointer', textAlign: 'center',
                                 transition: 'all 0.2s', boxShadow: role === 'user' ? '0 10px 20px -5px rgba(69, 90, 247, 0.1)' : 'none'
                             }}
                         >
-                            <UserCircle size={24} color={role === 'user' ? '#455af7' : '#94a3b8'} style={{ marginBottom: '0.5rem' }} />
-                            <p style={{ fontSize: '0.85rem', fontWeight: 800, color: role === 'user' ? '#455af7' : '#64748b', margin: 0 }}>Customer</p>
+                            <UserCircle size={22} color={role === 'user' ? '#455af7' : '#94a3b8'} style={{ marginBottom: '0.5rem' }} />
+                            <p style={{ fontSize: '0.75rem', fontWeight: 800, color: role === 'user' ? '#455af7' : '#64748b', margin: 0 }}>Customer</p>
                         </div>
                         <div 
                             onClick={() => selectRole('agent')}
                             style={{ 
-                                padding: '1.25rem', borderRadius: '12px', border: `2px solid ${role === 'agent' ? '#455af7' : '#f1f5f9'}`, 
+                                padding: '1rem 0.5rem', borderRadius: '12px', border: `2px solid ${role === 'agent' ? '#455af7' : '#f1f5f9'}`, 
                                 background: role === 'agent' ? 'white' : '#f8fafc', cursor: 'pointer', textAlign: 'center',
                                 transition: 'all 0.2s', boxShadow: role === 'agent' ? '0 10px 20px -5px rgba(69, 90, 247, 0.1)' : 'none'
                             }}
                         >
-                            <Briefcase size={24} color={role === 'agent' ? '#455af7' : '#94a3b8'} style={{ marginBottom: '0.5rem' }} />
-                            <p style={{ fontSize: '0.85rem', fontWeight: 800, color: role === 'agent' ? '#455af7' : '#64748b', margin: 0 }}>Agent</p>
+                            <Briefcase size={22} color={role === 'agent' ? '#455af7' : '#94a3b8'} style={{ marginBottom: '0.5rem' }} />
+                            <p style={{ fontSize: '0.75rem', fontWeight: 800, color: role === 'agent' ? '#455af7' : '#64748b', margin: 0 }}>Agent</p>
+                        </div>
+                        <div 
+                            onClick={() => selectRole('admin')}
+                            style={{ 
+                                padding: '1rem 0.5rem', borderRadius: '12px', border: `2px solid ${role === 'admin' ? '#455af7' : '#f1f5f9'}`, 
+                                background: role === 'admin' ? 'white' : '#f8fafc', cursor: 'pointer', textAlign: 'center',
+                                transition: 'all 0.2s', boxShadow: role === 'admin' ? '0 10px 20px -5px rgba(69, 90, 247, 0.1)' : 'none'
+                            }}
+                        >
+                            <Shield size={22} color={role === 'admin' ? '#455af7' : '#94a3b8'} style={{ marginBottom: '0.5rem' }} />
+                            <p style={{ fontSize: '0.75rem', fontWeight: 800, color: role === 'admin' ? '#455af7' : '#64748b', margin: 0 }}>Admin</p>
                         </div>
                     </div>
 
@@ -173,7 +184,7 @@ const Register = () => {
                             }} 
                             disabled={isLoading}
                         >
-                            {isLoading ? 'Creating Account...' : `Register as ${role === 'user' ? 'Customer' : 'Agent'}`}
+                            {isLoading ? 'Creating Account...' : `Register as ${role === 'user' ? 'Customer' : (role === 'agent' ? 'Agent' : 'Admin')}`}
                         </motion.button>
                         
                         <div style={{ textAlign: 'center', marginTop: '2rem' }}>

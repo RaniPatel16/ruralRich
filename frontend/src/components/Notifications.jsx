@@ -1,13 +1,71 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Bell, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
+import { getOrders } from '../features/orders/orderSlice';
 
 const Notifications = () => {
-    const [notifications, setNotifications] = useState([
-        { id: 1, text: "Your order #8F2A was assigned to Agent Sam.", type: "info", time: "2m ago" },
-        { id: 2, text: "New delivery request in your cluster!", type: "alert", time: "5m ago" }
-    ]);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { user } = useSelector((state) => state.auth);
+    const { orders = [] } = useSelector((state) => state.orders);
+    
+    const [notifications, setNotifications] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
+    const [seenOrders, setSeenOrders] = useState([]);
+    const isFirstRun = useRef(true);
+
+    // Periodically fetch orders to check for new assignments
+    useEffect(() => {
+        const interval = setInterval(() => {
+            dispatch(getOrders());
+        }, 5000); // Check every 5 seconds
+        return () => clearInterval(interval);
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!user || user.role !== 'agent') return;
+
+        // Find orders assigned to this agent with 'confirmed' status
+        const myNewOrders = orders.filter(o => 
+            (o.agentId === user._id || o.agentId === user.id) && 
+            o.status === 'confirmed' && 
+            !seenOrders.includes(o._id)
+        );
+
+        if (myNewOrders.length > 0) {
+            // Update seen orders
+            setSeenOrders(prev => [...prev, ...myNewOrders.map(o => o._id)]);
+
+            // Don't show toast on the very first load of existing orders
+            if (!isFirstRun.current) {
+                myNewOrders.forEach(o => {
+                    const newNotif = {
+                        id: Date.now() + Math.random(),
+                        text: `New Assignment: Order #${o._id.slice(-6).toUpperCase()} is ready for dispatch!`,
+                        type: "alert",
+                        time: "Just now"
+                    };
+                    setNotifications(prev => [newNotif, ...prev]);
+                    toast.success(
+                        (t) => (
+                            <div onClick={() => { navigate(`/orders/${o._id}`); toast.dismiss(t.id); }} style={{ cursor: 'pointer' }}>
+                                🚀 New order assigned! <b>Click to view</b>
+                            </div>
+                        ),
+                        {
+                            icon: '📦',
+                            style: { borderRadius: '15px', background: '#0f172a', color: '#fff', fontWeight: 700 },
+                            duration: 6000
+                        }
+                    );
+                });
+            }
+        }
+        isFirstRun.current = false;
+    }, [orders, user, seenOrders, navigate]);
 
     const remove = (id) => setNotifications(n => n.filter(item => item.id !== id));
 

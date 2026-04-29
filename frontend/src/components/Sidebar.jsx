@@ -14,6 +14,7 @@ const Sidebar = () => {
     const menuItems = {
         user: [
             { path: '/dashboard', label: 'Overview', icon: <Home size={20} /> },
+            { path: '/marketplace', label: 'Marketplace', icon: <ShoppingBag size={20} /> },
             { path: '/addresses', label: 'My Addresses', icon: <MapPin size={20} /> },
             { path: '/orders/new', label: 'New Shipment', icon: <Package size={20} /> },
             { path: '/orders/history', label: 'Order History', icon: <History size={20} /> },
