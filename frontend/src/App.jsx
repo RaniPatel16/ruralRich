@@ -12,10 +12,12 @@ import AddressList from './pages/AddressList';
 import CreateOrder from './pages/CreateOrder';
 import OrderHistory from './pages/OrderHistory';
 import OrderTracking from './pages/OrderTracking';
+import Marketplace from './pages/Marketplace';
 import AdminDashboard from './pages/AdminDashboard';
-import Forbidden from './pages/Forbidden';
 import AdminOrderManagement from './pages/AdminOrderManagement';
 import AgentManagement from './pages/AgentManagement';
+import AdminUserManagement from './pages/AdminUserManagement';
+import Forbidden from './pages/Forbidden';
 import SmartLogistics from './pages/SmartLogistics';
 import AgentEarnings from './pages/AgentEarnings';
 import AgentDashboard from './pages/AgentDashboard';
@@ -44,6 +46,7 @@ function App() {
           {/* Protected Main Routes */}
           <Route element={<PrivateRoute roles={['user', 'admin', 'agent']} />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/marketplace" element={<Marketplace />} />
             <Route path="/addresses/new" element={<CreateAddress />} />
             <Route path="/addresses" element={<AddressList />} />
             <Route path="/orders/new" element={<CreateOrder />} />
@@ -67,6 +70,7 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/orders" element={<AdminOrderManagement />} />
             <Route path="/admin/agents" element={<AgentManagement />} />
+            <Route path="/admin/users" element={<AdminUserManagement />} />
           </Route>
         </Routes>
       </MainLayout>
