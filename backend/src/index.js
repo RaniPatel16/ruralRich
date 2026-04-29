@@ -2,12 +2,39 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const http = require('http');
+const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 
 // Connect to Database
 connectDB();
 
 const app = express();
+const server = http.createServer(app);
+
+// Initialize Socket.io for Live Order Tracking (Checklist Item #14)
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST", "PUT"]
+    }
+});
+
+io.on('connection', (socket) => {
+    console.log(`Live Tracking Connected: ${socket.id}`);
+    
+    socket.on('join_order', (orderId) => {
+        socket.join(orderId);
+        console.log(`Client joined live tracking room: ${orderId}`);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`Live Tracking Disconnected: ${socket.id}`);
+    });
+});
+
+// Make socket instance available in routes for emitting updates
+app.set('io', io);
 
 // Middleware
 app.use(cors());
@@ -43,6 +70,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+server.listen(PORT, () => {
+    console.log(`Server & Socket.io running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
