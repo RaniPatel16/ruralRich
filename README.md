@@ -97,7 +97,7 @@ This project was strictly built to satisfy a high-level academic and industry-re
 ### 2. Clone the Repository
 ```bash
 git clone https://github.com/RaniPatel16/assignment1.git
-cd rural
+cd ruralRich
 ```
 
 ### 3. Setup Backend
@@ -105,9 +105,9 @@ cd rural
 cd backend
 npm install
 # Create a .env file with:
-# MONGODB_URI=your_mongodb_uri
-# JWT_SECRET=your_secret_key
-# PORT=5000
+MONGODB_URI=mongodb://localhost:27017/ruralreach
+JWT_SECRET=your_super_secret_key_change_this_in_production
+PORT=5000
 npm run dev
 ```
 
@@ -136,7 +136,7 @@ The high-fidelity UI/UX prototype for this project was designed in Figma, focusi
 
 ## 🔗 Project Structure
 ```text
-rural/
+ruralRich/
 ├── backend/
 │   ├── models/        # Database Schemas (User, Address, Order, Delivery)
 │   ├── controllers/   # Business Logic
