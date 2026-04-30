@@ -68,8 +68,11 @@ app.use((err, req, res, next) => {
     });
 });
 
-const PORT = process.env.PORT || 5000;
+if (process.env.NODE_ENV !== 'production' || process.env.VERCEL) {
+    const PORT = process.env.PORT || 5000;
+    server.listen(PORT, () => {
+        console.log(`Server & Socket.io running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+    });
+}
 
-server.listen(PORT, () => {
-    console.log(`Server & Socket.io running in ${process.env.NODE_ENV} mode on port ${PORT}`);
-});
+module.exports = app;
