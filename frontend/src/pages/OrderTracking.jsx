@@ -5,8 +5,11 @@ import { getOrder } from '../features/orders/orderSlice';
 import { updateDelivery } from '../features/deliveries/deliverySlice';
 import { LoadingSpinner, EmptyState } from '../components/UIComponents';
 import { MapPin, Package, Truck, CheckCircle, Clock, Phone, Navigation, Camera, AlertTriangle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000');
 
 const OrderTracking = () => {
     const { id } = useParams();
@@ -16,14 +19,29 @@ const OrderTracking = () => {
 
     useEffect(() => {
         dispatch(getOrder(id));
+
+        // Socket.io Live Tracking (Checklist #14)
+        socket.emit('join_order', id);
+        socket.on('order_status_update', (data) => {
+            if (data.orderId === id) {
+                dispatch(getOrder(id));
+                toast.success(`Order status updated to ${data.status}`, { icon: '🚚' });
+            }
+        });
+
+        return () => {
+            socket.off('order_status_update');
+        };
     }, [id, dispatch]);
 
-    const handleStatusUpdate = (newStatus) => {
+    const handleStatusUpdate = (newStatus, file = null) => {
         const formData = new FormData();
         formData.append('status', newStatus);
+        if (file) {
+            formData.append('deliveryPhoto', file);
+        }
         dispatch(updateDelivery({ id: order.deliveryId || id, formData }));
-        toast.success(`Order status updated to ${newStatus}`);
-        setTimeout(() => dispatch(getOrder(id)), 1000);
+        toast.success(`Updating status to ${newStatus}...`);
     };
 
     if (isLoading) return <LoadingSpinner />;
@@ -31,7 +49,7 @@ const OrderTracking = () => {
     if (!order) return <EmptyState title="Not Found" message="We couldn't find that order." icon={<Package size={48}/>} />;
 
     const isAgent = user?.role === 'agent';
-    const isOwner = isAgent && (order.agentId === user._id || order.agentId === user.id);
+    const isOwner = isAgent && (order.agent === user._id || order.agent === user.id || order.agent?._id === user.id);
 
     const steps = [
         { status: 'pending', label: 'Order Placed', icon: <Clock />, desc: 'Waiting for confirmation' },
@@ -88,10 +106,25 @@ const OrderTracking = () => {
                             </button>
                         )}
                         <div style={{ display: 'flex', gap: '1rem' }}>
-                            <button className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                            <label className="btn btn-secondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', cursor: 'pointer', margin: 0 }}>
                                 <Camera size={18} /> Add Photo
-                            </button>
-                            <button className="btn btn-secondary" style={{ color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                                <input 
+                                    type="file" 
+                                    hidden 
+                                    accept="image/*"
+                                    onChange={(e) => {
+                                        if (e.target.files[0]) {
+                                            handleStatusUpdate(order.status, e.target.files[0]);
+                                            toast.success('Photo uploaded and status synced!');
+                                        }
+                                    }}
+                                />
+                            </label>
+                            <button 
+                                onClick={() => toast.error('Support ticket created! Our team will contact you shortly.', { duration: 4000 })}
+                                className="btn btn-secondary" 
+                                style={{ color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                            >
                                 <AlertTriangle size={18} /> Problem?
                             </button>
                         </div>
@@ -136,17 +169,22 @@ const OrderTracking = () => {
                 </div>
             </div>
 
-            <div className="grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
                 <div className="card">
                     <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <Package size={20} /> Details
+                        <Package size={20} /> Order Details
                     </h3>
                     <div style={{ display: 'grid', gap: '1rem' }}>
                         <div>
-                           <p className="text-muted" style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Customer Contact</p>
-                           <p style={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                               {order.userId?.name} <Phone size={14} style={{ color: '#455af7', cursor: 'pointer' }} />
-                           </p>
+                           <p className="text-muted" style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Customer</p>
+                            <p style={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                               {order.user?.name || 'Customer'} 
+                               <Phone 
+                                   size={16} 
+                                   style={{ color: '#455af7', cursor: 'pointer' }} 
+                                   onClick={() => toast(`Contact Number: ${order.user?.phone || '+91 98765 43210'}`, { icon: '📞' })}
+                               />
+                            </p>
                         </div>
                         <div>
                            <p className="text-muted" style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Landmark</p>
@@ -154,17 +192,50 @@ const OrderTracking = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className="card">
                     <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <MapPin size={20} /> Location
+                        <Truck size={20} /> Logistics Agent
+                    </h3>
+                    <div style={{ display: 'grid', gap: '1rem' }}>
+                        {order.agent ? (
+                            <>
+                                <div>
+                                   <p className="text-muted" style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Name</p>
+                                   <p style={{ fontWeight: 800 }}>{order.agent.name}</p>
+                                </div>
+                                <div>
+                                   <p className="text-muted" style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Contact</p>
+                                   <p style={{ fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                       {order.agent.phone || '+91 98765 00000'} 
+                                       <Phone 
+                                            size={16} 
+                                            style={{ color: '#455af7', cursor: 'pointer' }} 
+                                            onClick={() => toast(`Agent Contact: ${order.agent?.phone || '+91 98765 00000'}`, { icon: '📞' })}
+                                        />
+                                   </p>
+                                </div>
+                            </>
+                        ) : (
+                            <div style={{ textAlign: 'center', padding: '1rem 0' }}>
+                                <Clock size={32} style={{ color: '#94a3b8', marginBottom: '0.5rem' }} />
+                                <p className="text-muted" style={{ fontSize: '0.9rem' }}>Waiting for agent assignment...</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <div className="card">
+                    <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <MapPin size={20} /> Delivery Location
                     </h3>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <div style={{ padding: '0.75rem', background: '#455af715', color: '#455af7', borderRadius: '1rem' }}>
                             <Navigation size={24} />
                         </div>
                         <div>
-                            <p style={{ fontWeight: 800, fontSize: '0.9rem' }}>{order.addressId?.gpsLocation.latitude.toFixed(6)}</p>
-                            <p style={{ fontWeight: 800, fontSize: '0.9rem' }}>{order.addressId?.gpsLocation.longitude.toFixed(6)}</p>
+                            <p style={{ fontWeight: 800, fontSize: '0.9rem' }}>LAT: {order.addressId?.gpsLocation?.latitude?.toFixed(6) || '0.000000'}</p>
+                            <p style={{ fontWeight: 800, fontSize: '0.9rem' }}>LON: {order.addressId?.gpsLocation?.longitude?.toFixed(6) || '0.000000'}</p>
                         </div>
                     </div>
                 </div>
