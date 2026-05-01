@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+    const envURL = import.meta.env.VITE_API_BASE_URL || 'https://ruralreach-backend.onrender.com';
+    return envURL.endsWith('/api') ? envURL : `${envURL}/api`;
+};
+
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'https://ruralreach-backend.onrender.com/api',
+    baseURL: getBaseURL(),
     headers: {
         'Content-Type': 'application/json',
     },
