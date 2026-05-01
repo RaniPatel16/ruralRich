@@ -6,11 +6,11 @@ const http = require('http');
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 
-// Connect to Database
-connectDB();
-
 const app = express();
 const server = http.createServer(app);
+
+// Connect to Database in background
+connectDB();
 
 // Initialize Socket.io for Live Order Tracking (Checklist Item #14)
 const io = new Server(server, {
@@ -69,7 +69,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
     console.log(`Server & Socket.io running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
 
