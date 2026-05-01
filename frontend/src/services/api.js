@@ -1,8 +1,9 @@
 import axios from 'axios';
 
+import { API_URL } from '../config';
+
 const getBaseURL = () => {
-    const envURL = import.meta.env.VITE_API_BASE_URL || 'https://ruralreach-backend.onrender.com';
-    return envURL.endsWith('/api') ? envURL : `${envURL}/api`;
+    return API_URL;
 };
 
 const api = axios.create({

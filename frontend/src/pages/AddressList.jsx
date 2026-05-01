@@ -9,6 +9,8 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { BACKEND_URL } from '../config';
+import api from '../services/api';
 import L from 'leaflet';
 
 const MapModal = ({ address, onClose }) => {
@@ -116,7 +118,7 @@ const AddressList = () => {
                             <div style={{ height: '200px', position: 'relative', background: '#f8fafc' }}>
                                 {address.photo && address.photo !== 'no-photo.jpg' ? (
                                     <img 
-                                        src={`http://localhost:5000${address.photo}`} 
+                                        src={`${BACKEND_URL}${address.photo}`} 
                                         alt="Location" 
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                                         onError={(e) => {
