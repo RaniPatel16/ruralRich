@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getOrders } from '../features/orders/orderSlice';
+import { BACKEND_URL } from '../config';
+import api from '../services/api';
 import { 
     Truck, Package, MapPin, Navigation, 
     CheckCircle2, Clock, IndianRupee, TrendingUp,
@@ -160,7 +162,7 @@ const AgentDashboard = () => {
                                             boxShadow: '0 4px 12px rgba(0,0,0,0.03)', overflow: 'hidden'
                                         }}>
                                             {order.addressId?.photo ? (
-                                                <img src={`http://localhost:5000${order.addressId.photo}`} alt="Loc" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                <img src={`${BACKEND_URL}${order.addressId.photo}`} alt="Loc" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             ) : (
                                                 <Package size={24} />
                                             )}

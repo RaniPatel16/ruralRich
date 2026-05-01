@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { BACKEND_URL } from '../config';
+import api from '../services/api';
 import { getOrders } from '../features/orders/orderSlice';
 import { getAddresses } from '../features/addresses/addressSlice';
 import { 
@@ -167,7 +169,7 @@ const Dashboard = () => {
                                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                                         <div style={{ background: 'white', padding: '0.6rem', borderRadius: '12px', color: '#64748b', overflow: 'hidden', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             {order.addressId?.photo ? (
-                                                <img src={`http://localhost:5000${order.addressId.photo}`} alt="Loc" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                <img src={`${BACKEND_URL}${order.addressId.photo}`} alt="Loc" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             ) : (
                                                 <Package size={20} />
                                             )}

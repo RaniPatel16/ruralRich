@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { User, Mail, Shield, Smartphone, Globe, Camera, Check, Settings, ShieldCheck, Clock, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BACKEND_URL } from '../config';
 import { updateProfile, reset } from '../features/auth/authSlice';
 
 const Profile = () => {
@@ -81,7 +82,7 @@ const Profile = () => {
                             }}>
                                 {photoPreview || (user?.profilePhoto && user.profilePhoto !== 'default-avatar.png') ? (
                                     <img 
-                                        src={photoPreview || `http://localhost:5000${user.profilePhoto}`} 
+                                        src={photoPreview || `${BACKEND_URL}${user.profilePhoto}`} 
                                         alt="Profile" 
                                         style={{ width: '100%', height: '100%', borderRadius: '36px', objectFit: 'cover' }} 
                                     />

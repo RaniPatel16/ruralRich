@@ -8,8 +8,9 @@ import { MapPin, Package, Truck, CheckCircle, Clock, Phone, Navigation, Camera, 
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
 import io from 'socket.io-client';
+import { BACKEND_URL } from '../config';
 
-const socket = io('http://localhost:5000');
+const socket = io(BACKEND_URL);
 
 const OrderTracking = () => {
     const { id } = useParams();

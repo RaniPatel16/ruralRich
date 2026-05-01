@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { logout, reset } from '../features/auth/authSlice';
+import { BACKEND_URL } from '../config';
 import { LogOut, Search, Settings, HelpCircle, Bell, User } from 'lucide-react';
 import Notifications from './Notifications';
 import { motion } from 'framer-motion';
@@ -95,7 +96,7 @@ const Navbar = () => {
                             overflow: 'hidden'
                         }}>
                             {user?.profilePhoto && user.profilePhoto !== 'default-avatar.png' ? (
-                                <img src={`http://localhost:5000${user.profilePhoto}`} alt="User" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                <img src={`${BACKEND_URL}${user.profilePhoto}`} alt="User" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             ) : (
                                 user?.name?.charAt(0)
                             )}
