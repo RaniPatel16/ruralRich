@@ -31,9 +31,12 @@ function ScrollToTop() {
   return null;
 }
 
+import SEO from './components/SEO';
+
 function App() {
   return (
     <Router>
+      <SEO />
       <ScrollToTop />
       <Toaster position="top-center" reverseOrder={false} />
       <MainLayout>
