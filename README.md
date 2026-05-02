@@ -274,14 +274,26 @@ node seed.js
 
 ## 📸 Project Screenshots
 
-### 🏠 Landing Page
-![Landing Page](./frontend/public/hero.png)
+### 🏠 Landing Page — Full View
+![Landing Page](./frontend/public/screenshots/landing_page.png)
 
-### 🏗️ Infrastructure Section
-![Infrastructure](./frontend/public/infrastructure.png)
+### 🔐 Login Page
+![Login Page](./frontend/public/screenshots/login_page.png)
 
-### 🔐 Auth Pages
-![Auth Hero](./frontend/public/auth_hero.png)
+### 📝 Register Page
+![Register Page](./frontend/public/screenshots/register_page.png)
+
+### 👤 Customer Dashboard
+![Customer Dashboard](./frontend/public/screenshots/customer_dashboard.png)
+
+### 🛡️ Admin Dashboard
+![Admin Dashboard](./frontend/public/screenshots/admin_dashboard.png)
+
+### 📦 Admin — Order Management
+![Admin Orders](./frontend/public/screenshots/admin_orders.png)
+
+### 👥 Admin — User Management
+![Admin Users](./frontend/public/screenshots/admin_users.png)
 
 ---
 
