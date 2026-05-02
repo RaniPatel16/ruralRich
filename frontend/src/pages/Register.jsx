@@ -6,6 +6,8 @@ import { Truck, CheckCircle2, UserCircle, Briefcase, Star, Shield } from 'lucide
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 
+import SEO from '../components/SEO';
+
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -40,6 +42,7 @@ const Register = () => {
 
     return (
         <div style={{ minHeight: '100vh', display: 'flex', background: 'white', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <SEO title="Create Account" description="Join RuralReach and start managing your rural logistics today." />
             {/* Left Side: Brand Panel */}
             <motion.div 
                 initial={{ opacity: 0 }}

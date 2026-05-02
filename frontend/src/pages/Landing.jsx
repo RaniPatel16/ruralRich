@@ -40,6 +40,10 @@ const Landing = () => {
             overflowX: 'hidden',
             fontFamily: "'Plus Jakarta Sans', sans-serif"
         }}>
+            <SEO 
+                title="Premium Rural Logistics" 
+                description="Revolutionizing rural supply chains with smart GPS addressing and community-verified delivery networks." 
+            />
             {/* Navigation */}
             <motion.nav 
                 initial={{ y: -100 }}

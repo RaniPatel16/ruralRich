@@ -5,6 +5,7 @@ import { login, reset } from '../features/auth/authSlice';
 import { Truck, Lock, Mail, CheckCircle2, ChevronLeft, Star, UserCircle, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import SEO from '../components/SEO';
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '', loginRole: 'user' });

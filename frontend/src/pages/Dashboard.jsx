@@ -11,6 +11,7 @@ import {
     Package, TrendingUp, ChevronRight, Activity, Truck, Info, Globe, Map as MapIcon, DollarSign, Zap
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -103,6 +104,7 @@ const Dashboard = () => {
             animate="show"
             style={{ paddingBottom: '4rem' }}
         >
+            <SEO title="User Dashboard" description="Manage your rural shipments and addresses in real-time." />
             <div style={{ marginBottom: '3.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#455af7', fontSize: '0.9rem', fontWeight: 800, marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                     <Activity size={16} />

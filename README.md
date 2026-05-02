@@ -274,26 +274,14 @@ node seed.js
 
 ## 📸 Project Screenshots
 
-### 🏠 Landing Page — Full View
-![Landing Page](./frontend/public/screenshots/landing_page.png)
+### 🏠 Global Infrastructure Hub (Landing)
+![Landing Page](./frontend/public/screenshots/landing.png)
 
-### 🔐 Login Page
-![Login Page](./frontend/public/screenshots/login_page.png)
+### 📝 Interactive Onboarding (Register)
+![Register Page](./frontend/public/screenshots/register.png)
 
-### 📝 Register Page
-![Register Page](./frontend/public/screenshots/register_page.png)
-
-### 👤 Customer Dashboard
-![Customer Dashboard](./frontend/public/screenshots/customer_dashboard.png)
-
-### 🛡️ Admin Dashboard
-![Admin Dashboard](./frontend/public/screenshots/admin_dashboard.png)
-
-### 📦 Admin — Order Management
-![Admin Orders](./frontend/public/screenshots/admin_orders.png)
-
-### 👥 Admin — User Management
-![Admin Users](./frontend/public/screenshots/admin_users.png)
+### 🛡️ Administrative Control Center (Admin Hub)
+![Admin Dashboard](./frontend/public/screenshots/admin.png)
 
 ---
 
