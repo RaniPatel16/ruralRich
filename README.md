@@ -280,20 +280,12 @@ node seed.js
 ### 🔐 Login Page
 ![Login Page](./frontend/public/screenshots/login_page.png)
 
-### 📝 Register Page
-![Register Page](./frontend/public/screenshots/register_page.png)
-
 ### 👤 Customer Dashboard
 ![Customer Dashboard](./frontend/public/screenshots/customer_dashboard.png)
-
-### 🛡️ Admin Dashboard
-![Admin Dashboard](./frontend/public/screenshots/admin_dashboard.png)
 
 ### 📦 Admin — Order Management
 ![Admin Orders](./frontend/public/screenshots/admin_orders.png)
 
-### 👥 Admin — User Management
-![Admin Users](./frontend/public/screenshots/admin_users.png)
 
 ---
 
