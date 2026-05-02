@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { lazy, Suspense, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import SkeletonLoader from './components/SkeletonLoader';
+import SEO from './components/SEO';
 
 const MainLayout = lazy(() => import('./components/MainLayout'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
@@ -34,7 +35,7 @@ function ScrollToTop() {
   return null;
 }
 
-import SEO from './components/SEO';
+
 
 function App() {
   return (

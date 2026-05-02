@@ -84,24 +84,33 @@ const AgentDashboard = () => {
             style={{ paddingBottom: '4rem' }}
         >
             {/* Header Section */}
-            <div style={{ marginBottom: '3.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <div style={{ 
+                marginBottom: '3.5rem', 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'flex-end',
+                background: '#0f172a',
+                padding: '2rem',
+                borderRadius: '32px',
+                color: 'white'
+            }}>
                 <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#10b981', fontSize: '0.9rem', fontWeight: 800, marginBottom: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         <Activity size={16} />
                         Active Duty • On-Shift
                     </div>
-                    <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem', color: '#0f172a', letterSpacing: '-0.02em' }}>
+                    <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '0.5rem', color: 'white', letterSpacing: '-0.02em' }}>
                         Agent Hub: {user?.name?.split(' ')[0] || 'Partner'}
                     </h1>
-                    <p style={{ color: '#64748b', fontSize: '1.1rem', fontWeight: 500 }}>You have {pendingDeliveries.length} shipments scheduled for immediate dispatch.</p>
+                    <p style={{ color: '#94a3b8', fontSize: '1.1rem', fontWeight: 500 }}>You have {pendingDeliveries.length} shipments scheduled for dispatch.</p>
                 </div>
                 
                 <Link to="/logistics" style={{
-                    padding: '1rem 2rem', background: '#455af7', color: 'white', borderRadius: '16px',
+                    padding: '1rem 2rem', background: '#10b981', color: 'white', borderRadius: '16px',
                     textDecoration: 'none', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.75rem',
-                    boxShadow: '0 20px 40px -10px rgba(69, 90, 247, 0.3)'
+                    boxShadow: '0 20px 40px -10px rgba(16, 185, 129, 0.3)'
                 }}>
-                    <Navigation size={18} /> Launch Route Optimizer
+                    <Navigation size={18} /> Launch Optimizer
                 </Link>
             </div>
 

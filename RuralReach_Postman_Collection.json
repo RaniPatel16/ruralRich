@@ -1,0 +1,186 @@
+{
+	"info": {
+		"_postman_id": " ruralreach-logistics-id",
+		"name": "RuralReach Smart Logistics",
+		"description": "API Collection for RuralReach Smart Logistics Platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New User\",\n    \"email\": \"newuser123@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"user\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ruralreach-backend-46ba.onrender.com/api/auth/register",
+							"protocol": "https",
+							"host": [
+								"ruralreach-backend-46ba",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"newuser123@example.com\",\n    \"password\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ruralreach-backend-46ba.onrender.com/api/auth/login",
+							"protocol": "https",
+							"host": [
+								"ruralreach-backend-46ba",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Addresses",
+			"item": [
+				{
+					"name": "Get All Addresses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://ruralreach-backend-46ba.onrender.com/api/addresses",
+							"protocol": "https",
+							"host": [
+								"ruralreach-backend-46ba",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Address",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addressLine\": \"123 Village Lane\",\n    \"landmark\": \"Near the Ancient Well\",\n    \"city\": \"Rural Town\",\n    \"coordinates\": { \"lat\": 23.0225, \"lng\": 72.5714 }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://ruralreach-backend-46ba.onrender.com/api/addresses",
+							"protocol": "https",
+							"host": [
+								"ruralreach-backend-46ba",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get My Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://ruralreach-backend-46ba.onrender.com/api/orders",
+							"protocol": "https",
+							"host": [
+								"ruralreach-backend-46ba",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delivery",
+			"item": [
+				{
+					"name": "Get My Deliveries (Agent Only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://ruralreach-backend-46ba.onrender.com/api/deliveries/my",
+							"protocol": "https",
+							"host": [
+								"ruralreach-backend-46ba",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"deliveries",
+								"my"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
