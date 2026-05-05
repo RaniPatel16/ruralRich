@@ -67,7 +67,7 @@ const Profile = () => {
                 <p style={{ color: '#64748b', fontSize: '1.1rem', fontWeight: 500 }}>Control your digital identity and account security.</p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '3rem', alignItems: 'start' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(360px, 100%), 1fr))', gap: '3rem', alignItems: 'start' }}>
                 {/* Left: Profile Identity Card */}
                 <div className="card" style={{ padding: '3rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
                     <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '120px', background: 'linear-gradient(135deg, #455af7 0%, #7c3aed 100%)', opacity: 0.05, zIndex: 0 }}></div>

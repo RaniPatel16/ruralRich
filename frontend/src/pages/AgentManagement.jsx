@@ -47,7 +47,7 @@ const AgentManagement = () => {
                     <p style={{ color: '#64748b', fontWeight: 600 }}>Loading agent network data...</p>
                 </div>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(340px, 100%), 1fr))', gap: '2rem' }}>
                     {agents && agents.map((agent, i) => (
                         <motion.div 
                             key={agent._id}

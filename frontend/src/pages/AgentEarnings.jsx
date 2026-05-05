@@ -85,7 +85,7 @@ const AgentEarnings = () => {
                 </button>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2.5rem', marginBottom: '4rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '2.5rem', marginBottom: '4rem' }}>
                 {/* Available Balance Card */}
                 <div style={{ 
                     padding: '2.5rem', background: '#0f172a', color: 'white', 

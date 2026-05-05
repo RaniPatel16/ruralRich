@@ -32,7 +32,7 @@ const AdminOrderManagement = () => {
         <div className="container">
             <h1 style={{ marginBottom: '2rem' }}>Order Management</h1>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(350px, 100%), 1fr))', gap: '2rem' }}>
                 <div>
                     <div className="card">
                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>

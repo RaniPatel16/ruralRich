@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import SkeletonLoader from './components/SkeletonLoader';
 import SEO from './components/SEO';
 
-const MainLayout = lazy(() => import('./components/MainLayout'));
+const MainLayout = lazy(() => import('./layouts/MainLayout'));
 const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 const Landing = lazy(() => import('./pages/Landing'));
 const Login = lazy(() => import('./pages/Login'));

@@ -122,7 +122,7 @@ const Register = () => {
                         <p style={{ color: '#64748b', fontSize: '1.1rem', fontWeight: 500 }}>Choose your role to get started.</p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(120px, 100%), 1fr))', gap: '1rem', marginBottom: '2rem' }}>
                         <div 
                             onClick={() => selectRole('user')}
                             style={{ 

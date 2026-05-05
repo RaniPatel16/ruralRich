@@ -73,7 +73,7 @@ const OrderHistory = () => {
             <div style={{ marginTop: '4rem' }}>
                 <h2>Your Saved Addresses</h2>
                 <p className="text-muted" style={{ marginBottom: '1.5rem' }}>Pick an address to place a quick order</p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: '1.5rem' }}>
                     {addresses && addresses.map((address) => (
                         <div key={address._id} className="card">
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>

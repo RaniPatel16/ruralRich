@@ -105,7 +105,7 @@ const AddressList = () => {
                     <Loader2 size={48} className="animate-spin" color="#455af7" />
                 </div>
             ) : (addresses && addresses.length > 0) ? (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))', gap: '2rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(400px, 100%), 1fr))', gap: '2rem' }}>
                     {addresses.map((address) => (
                         <motion.div 
                             key={address._id}

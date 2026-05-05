@@ -8,6 +8,7 @@ import {
     CheckCircle2, Star, Target, Zap as ZapIcon, Shield
 } from 'lucide-react';
 import Footer from '../components/Footer';
+import SEO from '../components/SEO';
 
 const Landing = () => {
     const { user } = useSelector(state => state.auth);
@@ -108,7 +109,7 @@ const Landing = () => {
                 position: 'relative', overflow: 'hidden', padding: '6rem 2rem 10rem',
                 backgroundImage: 'radial-gradient(circle at 90% 10%, #f5f3ff 0%, transparent 40%), radial-gradient(circle at 10% 90%, #eff6ff 0%, transparent 40%)'
             }}>
-                <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 1.2fr) minmax(0, 1fr)', gap: '4rem', alignItems: 'center' }}>
+                <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '4rem', alignItems: 'center' }}>
                     <motion.div 
                         initial="hidden"
                         animate="visible"
@@ -244,7 +245,7 @@ const Landing = () => {
                         </p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '2.5rem' }}>
                         {[
                             { 
                                 icon: <MapPin size={28} />, 
@@ -293,7 +294,7 @@ const Landing = () => {
                 {/* Decorative gradients */}
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0.2, background: 'radial-gradient(circle at 10% 10%, #455af7 0%, transparent 40%), radial-gradient(circle at 90% 90%, #7c3aed 0%, transparent 40%)' }}></div>
                 
-                <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '6rem', alignItems: 'center', position: 'relative', zIndex: 2 }}>
+                <div style={{ maxWidth: '1300px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '6rem', alignItems: 'center', position: 'relative', zIndex: 2 }}>
                     <div>
                         <div style={{ display: 'inline-flex', padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.1)', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 800, color: '#94a3b8', marginBottom: '2rem', border: '1px solid rgba(255,255,255,0.1)' }}>
                             THE PHYSICAL LAYER
@@ -340,7 +341,7 @@ const Landing = () => {
                             {[...Array(5)].map((_, i) => <Star key={i} fill="#f59e0b" color="#f59e0b" size={24} />)}
                         </div>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '3rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(380px, 100%), 1fr))', gap: '3rem' }}>
                         {[
                             { name: "John Doe", role: "Dairy Cooperative Manager", text: "RuralReach reduced our spoilage rates by 60% through their climate-controlled cluster delivery system." },
                             { name: "Jane Smith", role: "Farmer Association Lead", text: "The transparent tracking provides our buyers with confidence that was never possible before." }

@@ -34,7 +34,7 @@ const Marketplace = () => {
                 </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(0, 1fr)', gap: '3rem', alignItems: 'start' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: '3rem', alignItems: 'start' }}>
                 
                 {/* Left Side: Input Form */}
                 <div style={{ display: 'grid', gap: '2rem' }}>
@@ -42,7 +42,7 @@ const Marketplace = () => {
                     {/* Package Type Selection */}
                     <div className="card" style={{ padding: '2rem' }}>
                         <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '1.5rem', color: '#0f172a' }}>1. Package Type</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: '1rem' }}>
                             {[
                                 { id: 'document', icon: <Search size={24} />, label: 'Document' },
                                 { id: 'box', icon: <Package size={24} />, label: 'Standard Box' },

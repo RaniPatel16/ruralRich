@@ -141,7 +141,7 @@ const SmartLogistics = () => {
                 </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 400px', gap: '2.5rem', alignItems: 'start' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(400px, 100%), 1fr))', gap: '2.5rem', alignItems: 'start' }}>
                 {/* Left Side: Map Overlay Card */}
                 <div className="card" style={{ padding: '0', height: '620px', overflow: 'hidden', position: 'relative', background: '#0f172a', borderRadius: '32px' }}>
                     <div style={{ 

@@ -115,7 +115,7 @@ const Login = () => {
                         <p style={{ color: '#64748b', fontSize: '1.1rem', fontWeight: 500 }}>Select your role and sign in.</p>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(120px, 100%), 1fr))', gap: '1rem', marginBottom: '2rem' }}>
                         <div 
                             onClick={() => setFormData({...formData, loginRole: 'user'})}
                             style={{ 

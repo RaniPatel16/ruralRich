@@ -87,7 +87,7 @@ const OrderTracking = () => {
                     <h3 style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                         <Navigation size={22} color="#455af7" /> Agent Action Center
                     </h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(180px, 100%), 1fr))', gap: '1rem' }}>
                         {order.status === 'confirmed' && (
                             <button 
                                 onClick={() => handleStatusUpdate('out-for-delivery')}
@@ -170,7 +170,7 @@ const OrderTracking = () => {
                 </div>
             </div>
 
-            <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
+            <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(250px, 100%), 1fr))', gap: '1.5rem' }}>
                 <div className="card">
                     <h3 style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <Package size={20} /> Order Details

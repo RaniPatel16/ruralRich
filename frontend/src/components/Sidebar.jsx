@@ -1,15 +1,31 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { 
-  Home, MapPin, ShoppingBag, History, 
-  Settings, Users, Truck, Layout, BarChart, LogOut, ChevronRight,
-  Package, Map as MapIcon, Wallet, Activity
+import {
+    Home, MapPin, ShoppingBag, History,
+    Users, Truck, Layout, LogOut, X, Menu,
+    Package, Map as MapIcon, Wallet, Activity, Settings
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Sidebar = () => {
     const { user } = useSelector((state) => state.auth);
     const location = useLocation();
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Close sidebar on route change (mobile)
+    useEffect(() => {
+        setIsOpen(false);
+    }, [location.pathname]);
+
+    // Close sidebar on resize to desktop
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) setIsOpen(false);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const menuItems = {
         user: [
@@ -38,128 +54,115 @@ const Sidebar = () => {
 
     const currentItems = menuItems[user?.role?.toLowerCase()] || menuItems.user;
 
-    return (
-        <aside style={{
-            width: '280px',
-            background: '#ffffff',
-            height: '100vh',
-            position: 'fixed',
-            left: 0,
-            top: 0,
-            padding: '2.5rem 1.5rem',
-            borderRight: '1px solid rgba(0,0,0,0.05)',
-            display: 'flex',
-            flexDirection: 'column',
-            zIndex: 100,
-            boxShadow: '4px 0 24px rgba(0,0,0,0.02)'
-        }}>
-            <Link to="/" style={{ 
-                marginBottom: '4rem', fontSize: '1.5rem', fontWeight: 900, 
-                color: '#455af7', textDecoration: 'none', display: 'flex', 
-                alignItems: 'center', gap: '0.75rem' 
-            }}>
-                <div style={{ 
-                    padding: '0.5rem', 
-                    background: 'linear-gradient(135deg, #455af7 0%, #7c3aed 100%)', 
-                    borderRadius: '12px',
-                    display: 'flex',
-                    boxShadow: '0 8px 16px -4px rgba(69, 90, 247, 0.3)'
-                }}>
+    const NavLink = ({ item }) => {
+        const isActive = location.pathname === item.path;
+        return (
+            <li>
+                <Link
+                    to={item.path}
+                    className={`sidebar-link${isActive ? ' sidebar-link--active' : ''}`}
+                >
+                    <div className="sidebar-link__icon">
+                        {item.icon}
+                    </div>
+                    <span>{item.label}</span>
+                    {isActive && (
+                        <motion.div
+                            layoutId="activeIndicator"
+                            className="sidebar-link__dot"
+                        />
+                    )}
+                </Link>
+            </li>
+        );
+    };
+
+    const SidebarContent = () => (
+        <>
+            <Link to="/" className="sidebar-logo">
+                <div className="sidebar-logo__icon">
                     <Truck color="white" size={20} />
                 </div>
                 RuralReach
             </Link>
 
-            <nav style={{ flex: 1 }}>
-                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginBottom: '1.5rem', marginLeft: '1rem', letterSpacing: '0.05em' }}>Menu</p>
-                <ul style={{ listStyle: 'none', display: 'grid', gap: '0.5rem' }}>
+            <nav className="sidebar-nav">
+                <p className="sidebar-section-label">Menu</p>
+                <ul className="sidebar-menu">
                     {currentItems.map((item) => (
-                        <li key={item.path}>
-                            <Link 
-                                to={item.path}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    padding: '0.875rem 1rem',
-                                    borderRadius: '14px',
-                                    color: location.pathname === item.path ? '#455af7' : '#64748b',
-                                    textDecoration: 'none',
-                                    background: location.pathname === item.path ? '#455af70a' : 'transparent',
-                                    transition: 'all 0.2s',
-                                    fontWeight: location.pathname === item.path ? 700 : 500
-                                }}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ 
-                                        color: location.pathname === item.path ? '#455af7' : '#94a3b8',
-                                        transition: 'all 0.2s'
-                                    }}>
-                                        {item.icon}
-                                    </div>
-                                    {item.label}
-                                </div>
-                                {location.pathname === item.path && (
-                                    <motion.div layoutId="active" style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#455af7' }} />
-                                )}
-                            </Link>
-                        </li>
+                        <NavLink key={item.path} item={item} />
                     ))}
                 </ul>
 
-                <p style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginTop: '2.5rem', marginBottom: '1.5rem', marginLeft: '1rem', letterSpacing: '0.05em' }}>Account</p>
-                <ul style={{ listStyle: 'none', display: 'grid', gap: '0.5rem' }}>
+                <p className="sidebar-section-label" style={{ marginTop: '2.5rem' }}>Account</p>
+                <ul className="sidebar-menu">
                     {commonItems.map((item) => (
-                        <li key={item.path}>
-                            <Link 
-                                to={item.path}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    padding: '0.875rem 1rem',
-                                    borderRadius: '14px',
-                                    color: location.pathname === item.path ? '#455af7' : '#64748b',
-                                    textDecoration: 'none',
-                                    background: location.pathname === item.path ? '#455af70a' : 'transparent',
-                                    transition: 'all 0.2s',
-                                    fontWeight: location.pathname === item.path ? 700 : 500
-                                }}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ 
-                                        color: location.pathname === item.path ? '#455af7' : '#94a3b8',
-                                        transition: 'all 0.2s'
-                                    }}>
-                                        {item.icon}
-                                    </div>
-                                    {item.label}
-                                </div>
-                            </Link>
-                        </li>
+                        <NavLink key={item.path} item={item} />
                     ))}
                 </ul>
             </nav>
 
-            <div style={{ 
-                padding: '1.5rem', marginTop: 'auto', borderTop: '1px solid #f1f5f9',
-                display: 'flex', alignItems: 'center', gap: '1rem',
-                background: '#f8fafc', borderRadius: '20px'
-            }}>
-                <div style={{ 
-                    width: '44px', height: '44px', borderRadius: '14px', 
-                    background: 'linear-gradient(135deg, #455af7 0%, #7c3aed 100%)', display: 'flex', 
-                    alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 800,
-                    boxShadow: '0 4px 12px rgba(69, 90, 247, 0.2)'
-                }}>
+            <div className="sidebar-user">
+                <div className="sidebar-user__avatar">
                     {user?.name?.charAt(0).toUpperCase()}
                 </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: '0.9rem', fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.name}</p>
-                    <p style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'capitalize', fontWeight: 600 }}>{user?.role}</p>
+                <div className="sidebar-user__info">
+                    <p className="sidebar-user__name">{user?.name}</p>
+                    <p className="sidebar-user__role">{user?.role}</p>
                 </div>
             </div>
-        </aside>
+        </>
+    );
+
+    return (
+        <>
+            {/* Mobile Hamburger Button */}
+            <button
+                className="sidebar-hamburger"
+                onClick={() => setIsOpen(true)}
+                aria-label="Open menu"
+            >
+                <Menu size={22} />
+            </button>
+
+            {/* Desktop Sidebar */}
+            <aside className="sidebar sidebar--desktop">
+                <SidebarContent />
+            </aside>
+
+            {/* Mobile Overlay + Drawer */}
+            <AnimatePresence>
+                {isOpen && (
+                    <>
+                        <motion.div
+                            key="overlay"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="sidebar-overlay"
+                            onClick={() => setIsOpen(false)}
+                        />
+                        <motion.aside
+                            key="drawer"
+                            initial={{ x: '-100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '-100%' }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+                            className="sidebar sidebar--mobile"
+                        >
+                            <button
+                                className="sidebar-close"
+                                onClick={() => setIsOpen(false)}
+                                aria-label="Close menu"
+                            >
+                                <X size={22} />
+                            </button>
+                            <SidebarContent />
+                        </motion.aside>
+                    </>
+                )}
+            </AnimatePresence>
+        </>
     );
 };
 

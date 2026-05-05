@@ -126,7 +126,7 @@ const CreateAddress = () => {
                 <p style={{ color: '#64748b', fontSize: '1.15rem' }}>Provide precise coordinates and visual landmarks for accurate delivery.</p>
             </div>
 
-            <form onSubmit={onSubmit} style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2.5rem' }}>
+            <form onSubmit={onSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: '2.5rem' }}>
                 <div style={{ display: 'grid', gap: '2rem' }}>
                     {/* Interactive Map Card */}
                     <div className="card" style={{ padding: '0', overflow: 'hidden', height: '450px', position: 'relative' }}>
