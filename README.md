@@ -3,7 +3,7 @@
 ### Mandatory Links
 - **Figma Design Link:** [View Figma Prototype](https://www.figma.com/design/jxdjf4Gy8GGIGlDkfCaAZi/Custom-Login-page-and-Signup-page-UI--Community-?node-id=0-1&p=f&t=G3hDP2kgFm25oBn1-0)
 - **Live Deployed Project Link:** [https://ruralreach-frontend.onrender.com](https://ruralreach-frontend.onrender.com)
-- **Backend Deployed Link:** [https://ruralreach-backend.onrender.com](https://ruralreach-backend.onrender.com) *(Update if your backend URL is different)*
+- **Backend Deployed Link:** [https://ruralreach-backend-46ba.onrender.com](https://ruralreach-backend-46ba.onrender.com)
 - **Postman Documentation Link:** [View API Documentation](https://documenter.getpostman.com/view/50840889/2sBXqKnfF5)
 - **YouTube Demo Video Link:** [Watch Project Demo](https://www.youtube.com/watch?v=wblTGqGLQ8c)
 
