@@ -1,27 +1,17 @@
 # 🚚 RuralReach — Smart Rural Logistics & Delivery Platform
 
-<div align="center">
-
-[![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-ruralreach--frontend.onrender.com-4f46e5?style=for-the-badge)](https://ruralreach-frontend.onrender.com)
-[![Figma Design](https://img.shields.io/badge/🎨%20Figma-View%20Prototype-f59e0b?style=for-the-badge)](https://www.figma.com/design/jxdjf4Gy8GGIGlDkfCaAZi/Custom-Login-page-and-Signup-page-UI--Community-?node-id=0-1&p=f&t=G3hDP2kgFm25oBn1-0)
-[![Postman Docs](https://img.shields.io/badge/📬%20Postman-API%20Documentation-FF6C37?style=for-the-badge)](https://documenter.getpostman.com/view/50840889/2sBXqKnfF5)
-[![YouTube Demo](https://img.shields.io/badge/▶️%20YouTube-Watch%20Demo-red?style=for-the-badge)](https://www.youtube.com/watch?v=wblTGqGLQ8c)
-[![PR on CodingGita](https://img.shields.io/badge/🔀%20CodingGita-PR%20%2315-6366f1?style=for-the-badge)](https://github.com/codinggita/ruralRich/pull/15)
-
-</div>
+### Mandatory Links
+- **Figma Design Link:** [View Figma Prototype](https://www.figma.com/design/jxdjf4Gy8GGIGlDkfCaAZi/Custom-Login-page-and-Signup-page-UI--Community-?node-id=0-1&p=f&t=G3hDP2kgFm25oBn1-0)
+- **Live Deployed Project Link:** [https://ruralreach-frontend.onrender.com](https://ruralreach-frontend.onrender.com)
+- **Backend Deployed Link:** [https://ruralreach-backend.onrender.com](https://ruralreach-backend.onrender.com) *(Update if your backend URL is different)*
+- **Postman Documentation Link:** [View API Documentation](https://documenter.getpostman.com/view/50840889/2sBXqKnfF5)
+- **YouTube Demo Video Link:** [Watch Project Demo](https://www.youtube.com/watch?v=wblTGqGLQ8c)
 
 ---
 
-## 🔗 Important Links
+## 📖 Project Description
 
-| Resource | Link |
-|---|---|
-| 🌐 **Live Frontend** | [ruralreach-frontend.onrender.com](https://ruralreach-frontend.onrender.com) |
-| 🎨 **Figma Prototype** | [View UI/UX Design](https://www.figma.com/design/jxdjf4Gy8GGIGlDkfCaAZi/Custom-Login-page-and-Signup-page-UI--Community-?node-id=0-1&p=f&t=G3hDP2kgFm25oBn1-0) |
-| 📬 **Postman Docs** | [API Documentation](https://documenter.getpostman.com/view/50840889/2sBXqKnfF5) |
-| ▶️ **YouTube Demo** | [Watch Project Demo](https://www.youtube.com/watch?v=wblTGqGLQ8c) |
-| 💻 **Personal GitHub** | [RaniPatel16/ruralRich](https://github.com/RaniPatel16/ruralRich) |
-| 🔀 **CodingGita PR** | [PR #15 on codinggita/ruralRich](https://github.com/codinggita/ruralRich/pull/15) |
+RuralReach is a full-stack MERN logistics platform designed to transform rural delivery into a viable, transparent, and community-driven service. By leveraging smart GPS addressing and localized agent networks, it bridges the last-mile gap in remote areas.
 
 ---
 
@@ -196,10 +186,6 @@ ruralRich/
 │   ├── package.json
 │   └── vercel.json                     # Frontend deployment config
 │
-├── .gitignore
-├── API_DOCUMENTATION.md                # Full REST API documentation
-├── RuralReach_Postman_Collection.json  # Importable Postman collection
-├── render.yaml                         # Render deployment config
 └── README.md                           # This file
 ```
 
